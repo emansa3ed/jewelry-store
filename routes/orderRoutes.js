@@ -13,6 +13,8 @@ router.get('/myorders', protect, getUserOrders);
 
 router.get('/:id' , protect ,getOrderById);
 router.get('/', protect, admin, getAllOrders); // Admin only
+router.delete('/:id', protect, admin, deletOrder); // Admin only
+
 
 
 module.exports = router;
