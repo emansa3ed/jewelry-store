@@ -36,11 +36,7 @@ const OrderSchema = new mongoose.Schema({
         enum: ['credit_card', 'paypal', 'bank_transfer', 'cash'],
         required: true
     },
-}, { 
-    timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
-});
+},);
 
 // Virtual for formatted order date
 OrderSchema.virtual('formattedDate').get(function() {
