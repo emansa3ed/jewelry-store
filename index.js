@@ -10,6 +10,8 @@ const cartRoutes = require('./routes/cartRoutes');
 const favoriteRoutes=require('./routes/favoriteRoutes');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const userProfile=require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
 
 
 dotenv.config();
@@ -27,6 +29,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/favorite',favoriteRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/admin' , adminRoutes);
 
 // Error Middleware
 app.use(errorHandler);
