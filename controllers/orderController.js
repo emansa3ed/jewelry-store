@@ -165,3 +165,16 @@ exports.getAllOrders = async (req, res, next) => {
     }
 };
 
+
+exports.deletOrder = async (req, res, next) =>{
+    try {
+        const id = req.params.id
+        const order = await Order.findByIdAndDelete(id);
+        if(!order){
+            return res.status(404).json({message : 'Order not found'})
+        }
+        res.json({message : "Order deleted successfully"});
+    } catch (error) {
+        next(error)
+    }
+} 
