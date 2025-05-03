@@ -102,7 +102,7 @@ exports.validateProductUpdate = baseProductValidator;
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body);
     if (!errors.isEmpty()) return res.status(400).json(formatErrors(errors.array()));
 
     const product = await Product.create(req.body);
@@ -117,7 +117,7 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
   try {
-      const products = await Product.find();
+      const products = await Product.find().populate('category', 'name');
       res.json(products);
   } catch (error) {
       next(error);
@@ -139,7 +139,7 @@ exports.getAllProducts = async (req, res, next) => {
 
 exports.getProductById = async (req, res, next) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id).populate('category', 'name');;
         if (!product) return res.status(404).json({ message: 'Product not found' });
         res.json(product);
     } catch (error) {
@@ -266,7 +266,7 @@ exports.getProductsByName = async (req, res, next) => {
 
     const products = await Product.find({
       name: { $regex: name, $options: "i" } // case-insensitive partial match
-    });
+    }).populate('category', 'name');
 
     res.status(200).json({ success: true, products });
   } catch (error) {
@@ -302,9 +302,9 @@ exports.getProductsByPrice = async (req, res, next) => {
         });
       }
   
-      const products = await Product.find({ price: priceFilter });
+      const products = await Product.find({ price: priceFilter }).populate('category', 'name');
   
-      res.status(200).json({ success: true, products });
+      res.status(200).json({ success: true, data:products });
     } catch (error) {
       next(error);
     }
